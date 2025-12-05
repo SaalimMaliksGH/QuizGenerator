@@ -13,8 +13,7 @@ const TopicSelection = ({ onStartQuiz }) => {
 
   return (
     <div className="card">
-      <h1>QUIZ GENERATOR</h1>
-      <p>Enter a topic to create a quiz!</p>
+      <p><b>Enter a topic to create a quiz!</b></p>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

@@ -94,13 +94,15 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
-        {theme === 'light' ? '🌙' : '☀️'}
-      </button>
-      
-      
-      {screen === "start" && <TopicSelection onStartQuiz={startQuiz} />}
+    <>
+      <h1 className="app-header">Quiz Generator</h1>
+      <div className="app-container">
+        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
+        
+        
+        {screen === "start" && <TopicSelection onStartQuiz={startQuiz} />}
       
       
       {screen === "loading" && <Loader topic={topic} />}
@@ -129,6 +131,7 @@ function App() {
         />
       )}
     </div>
+    </>
   )
 }
 

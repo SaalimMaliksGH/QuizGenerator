@@ -21,23 +21,30 @@ const QuizScreen = ({
       </div>
       <p className="step-count">Question {currentIndex + 1} of {totalQuestions}</p>
 
-      {/* Question Display */}
-      <h2 className="question-text">{currentQuestion.question}</h2>
+      {/* Split Layout: Question Left, Options Right */}
+      <div className="quiz-split-layout">
+        {/* Question Section - Left */}
+        <div className="question-section">
+          <h2 className="question-text">{currentQuestion.question}</h2>
+        </div>
 
-      {/* Options List */}
-      <div className="options-grid">
-        {currentQuestion.options.map((option, index) => {
-          const isSelected = userAnswers[currentQuestion.id] === option;
-          return (
-            <button
-              key={index}
-              className={`option-btn ${isSelected ? "selected" : ""}`}
-              onClick={() => onAnswer(currentQuestion.id, option)}
-            >
-              {option}
-            </button>
-          );
-        })}
+        {/* Options Section - Right */}
+        <div className="options-section">
+          <div className="options-grid">
+            {currentQuestion.options.map((option, index) => {
+              const isSelected = userAnswers[currentQuestion.id] === option;
+              return (
+                <button
+                  key={index}
+                  className={`option-btn ${isSelected ? "selected" : ""}`}
+                  onClick={() => onAnswer(currentQuestion.id, option)}
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* Navigation Buttons */}
