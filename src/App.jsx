@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import './App.css'
 
+import TopicSelection from './components/TopicSelection'
+import Loader from './components/Loader'
+import QuizScreen from './components/QuizScreen'
+import ResultScreen from './components/ResultScreen'
+
 function App() {
   
   const [screen, setScreen] = useState("start");
