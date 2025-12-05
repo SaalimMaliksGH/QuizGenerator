@@ -17,7 +17,7 @@ const TopicSelection = ({ onStartQuiz }) => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="e.g., React, Wellness, History"
+          placeholder="e.g.: React, Mathematics, DSA, History"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           className="input-field"
