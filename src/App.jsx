@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 import TopicSelection from './components/TopicSelection'
@@ -16,9 +16,19 @@ function App() {
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
-  
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
+
+  // Apply theme to document
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  };
 
   const startQuiz = async (selectedTopic) => {
     setTopic(selectedTopic);
@@ -85,6 +95,10 @@ function App() {
 
   return (
     <div className="app-container">
+      <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+        {theme === 'light' ? '🌙' : '☀️'}
+      </button>
+      
       
       {screen === "start" && <TopicSelection onStartQuiz={startQuiz} />}
       
