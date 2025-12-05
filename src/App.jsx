@@ -5,6 +5,7 @@ import TopicSelection from './components/TopicSelection'
 import Loader from './components/Loader'
 import QuizScreen from './components/QuizScreen'
 import ResultScreen from './components/ResultScreen'
+import { generateAIFeedback, generateQuizQuestions } from './ai-service'
 
 function App() {
   
@@ -17,6 +18,70 @@ function App() {
   const [feedback, setFeedback] = useState("");
   
 
+  const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
+
+  const startQuiz = async (selectedTopic) => {
+    setTopic(selectedTopic);
+    setScreen("loading");
+    try {
+      const data = await generateQuizQuestions(selectedTopic);
+      setQuestions(data);
+      setScreen("quiz");
+    // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      alert("Error generating quiz. Please try again.");
+      setScreen("start");
+    }
+  };
+
+  const handleAnswer = (questionId, answer) => {
+    setUserAnswers({ ...userAnswers, [questionId]: answer });
+  };
+
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  // UPDATED: Handle Submit with Async Feedback
+  const handleSubmit = async () => {
+    // 1. Calculate Score Locally
+    let newScore = 0;
+    questions.forEach((q) => {
+      if (userAnswers[q.id] === q.correctAnswer) {
+        newScore += 1;
+      }
+    });
+    setScore(newScore);
+    
+    // 2. Switch screen immediately so user sees the score
+    setScreen("result");
+    setIsFeedbackLoading(true); // Start loading feedback
+
+    // 3. Fetch specific feedback from Gemini
+    const aiFeedback = await generateAIFeedback(topic, newScore, questions.length);
+    
+    setFeedback(aiFeedback);
+    setIsFeedbackLoading(false); // Stop loading feedback
+  };
+
+  const resetQuiz = () => {
+    setScreen("start");
+    setTopic("");
+    setQuestions([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers({});
+    setScore(0);
+    setFeedback("");
+    setIsFeedbackLoading(false);
+  };
 
   return (
     <div className="app-container">

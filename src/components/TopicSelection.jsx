@@ -1,5 +1,5 @@
 
-import useState from "react"
+import {useState} from "react"
 
 const TopicSelection = ({ onStartQuiz }) => {
   const [topic, setTopic] = useState("");
