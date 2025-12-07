@@ -2,7 +2,6 @@
 
 An AI-powered quiz application that generates custom quizzes on any topic using Google's Gemini AI. Built with React and featuring a modern, classy UI with light/dark theme support.
 
-![Quiz Generator Banner](./screenshots/banner.png)
 
 ## ✨ Features
 
